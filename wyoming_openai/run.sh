@@ -32,6 +32,7 @@ tts_key="$(config_or_empty 'tts_api_key')"
 tts_model="$(config_or_empty 'tts_model')"
 tts_voices="$(config_or_empty 'tts_voices')"
 tts_instructions="$(config_or_empty 'tts_instructions')"
+tts_extra_body="$(config_or_empty 'tts_extra_body')"
 
 if bashio::var.is_empty "${stt_model}" && bashio::var.is_empty "${tts_model}"; then
     bashio::exit.nok \
@@ -121,6 +122,14 @@ if bashio::var.has_value "${tts_model}"; then
     if bashio::var.has_value "${tts_instructions}"; then
         TTS_INSTRUCTIONS="${tts_instructions}"
         export TTS_INSTRUCTIONS
+    fi
+
+    # Upstream asks for WAV by default, which OpenRouter rejects: its speech
+    # endpoint accepts only mp3 or pcm. Set this to '{"response_format": "pcm"}'
+    # when speaking through OpenRouter.
+    if bashio::var.has_value "${tts_extra_body}"; then
+        TTS_EXTRA_BODY="${tts_extra_body}"
+        export TTS_EXTRA_BODY
     fi
 
     tts_backend="$(backend_for "${tts_url}")"

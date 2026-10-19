@@ -1,6 +1,6 @@
 ---
 name: Wyoming OpenAI
-version: "0.2.0"
+version: "0.2.1"
 slug: wyoming_openai
 description: Speech-to-text and text-to-speech for Assist through any OpenAI-compatible API
 url: https://github.com/fenyag7/ha-addons/tree/main/wyoming_openai
@@ -30,6 +30,7 @@ options:
   tts_streaming: true
   tts_speed: 1.0
   tts_instructions: ""
+  tts_extra_body: ""
   log_level: info
 schema:
   api_key: password
@@ -44,4 +45,5 @@ schema:
   tts_streaming: bool
   tts_speed: float(0.25,4.0)
   tts_instructions: str?
+  tts_extra_body: str?
   log_level: list(debug|info|warning|error)

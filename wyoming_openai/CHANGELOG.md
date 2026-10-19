@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1
+
+- New `tts_extra_body` option, passed to `wyoming-openai` as `TTS_EXTRA_BODY`.
+  It closes the gap for endpoints that reject the WAV default: OpenRouter's
+  `/api/v1/audio/speech` accepts only `mp3` and `pcm`, so speech failed with
+  HTTP 400 before a single word was spoken. Set it to
+  `{"response_format": "pcm"}` and point `tts_model` at an OpenRouter speech
+  model such as `microsoft/mai-voice-2.1` or
+  `google/gemini-3.8-flash-lite-tts`.
+
 ## 0.2.0
 
 **The slug changed from `wyoming_openai_voxtral` to `wyoming_openai`.** Home

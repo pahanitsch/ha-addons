@@ -26,6 +26,7 @@ through the Supervisor. There is no web interface and no ingress.
 | `tts_streaming` | `true` | Synthesise sentence by sentence. |
 | `tts_speed` | `1.0` | Between 0.25 and 4.0. |
 | `tts_instructions` | empty | `gpt-4o-mini-tts` only. |
+| `tts_extra_body` | empty | JSON merged into the speech request. Use `{"response_format": "pcm"}` with OpenRouter. |
 | `log_level` | `info` | `debug`, `info`, `warning`, `error`. |
 
 Clearing both `stt_model` and `tts_model` leaves nothing to serve, and the
@@ -135,6 +136,11 @@ not in `languages`. Check the separator first.
 **Every request fails with 401.** The key is wrong, or the account has no access
 to the model. `curl -H "Authorization: Bearer KEY" https://api.openai.com/v1/models`
 lists what the account can actually use.
+
+**Every request fails with 400 mentioning `response_format`.** The endpoint
+rejects the default WAV request. OpenRouter's speech API accepts only `mp3` and
+`pcm`; set `tts_extra_body` to `{"response_format": "pcm"}` and pick a voice the
+model actually offers.
 
 **Every request fails with 400 mentioning instructions.** `tts_instructions` is
 set and the model is not `gpt-4o-mini-tts`. Clear one or the other.
